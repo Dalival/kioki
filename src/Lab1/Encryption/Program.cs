@@ -4,7 +4,8 @@ const string message = "Федоренко Егор и Мадина Ахриев
 
 var encryptors = new List<IEncryptor>
 {
-    new FenceEncryptor(5)
+    new FenceEncryptor(5),
+    new KeywordEncryptor("EgorAndMadina")
 };
 
 foreach (var encryptor in encryptors)
