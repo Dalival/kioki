@@ -6,7 +6,7 @@ namespace Encryption;
 
 public class KeywordEncryptor : IEncryptor
 {
-    private const char HookSymbol = '~';
+    private const char HookSymbol = '`';
 
     private readonly List<int> _indexes;
 
@@ -98,7 +98,7 @@ public class KeywordEncryptor : IEncryptor
         {
             var indexInWord = 0;
             var order = 0;
-            for (var occurence = 0; occurence < keyword.Count(c => c == letter); occurence++)
+            for (var i = 0; i < keyword.Count(c => c == letter); i++)
             {
                 indexInWord = keyword.IndexOf(letter, indexInWord);
                 order = orderedKeyword.IndexOf(letter, order);
