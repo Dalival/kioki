@@ -4,7 +4,7 @@ namespace Encryption;
 
 public class FenceEncryptor : IEncryptor
 {
-    private const char HookSymbol = '~';
+    private const char HookSymbol = '`';
 
     private readonly int _key;
 

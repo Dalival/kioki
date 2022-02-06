@@ -1,6 +1,4 @@
-﻿using System.Collections.Immutable;
-using System.Data;
-using System.Text;
+﻿using System.Text;
 
 namespace Encryption;
 
@@ -32,7 +30,7 @@ public class KeywordEncryptor : IEncryptor
 
     public string Encrypt(string message)
     {
-        var normalizedMsg = GetNormalized(message);
+        var normalizedMsg = Normalize(message);
         var lines = SplitOnLines(normalizedMsg);
 
         var builder = new StringBuilder();
@@ -65,7 +63,7 @@ public class KeywordEncryptor : IEncryptor
         return builder.ToString();
     }
 
-    private string GetNormalized(string message)
+    private string Normalize(string message)
     {
         while (message.Length % _indexes.Count != 0)
         {
