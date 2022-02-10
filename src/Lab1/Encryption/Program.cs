@@ -1,7 +1,6 @@
 ﻿using Encryption;
 
-// const string message = "Федоренко Егор и Мадина Ахриева – на страже безпасности!";
-const string message = "ЭТОЛЕКЦИЯПОКРИПТ";
+const string message = "Федоренко Егор и Мадина Ахриева из 972301 – на страже безпасности!";
 
 var encryptors = new List<IEncryptor>
 {
@@ -13,12 +12,14 @@ var encryptors = new List<IEncryptor>
 foreach (var encryptor in encryptors)
 {
     var encrypted = encryptor.Encrypt(message);
-    var original = encryptor.Decrypt(encrypted);
+    var decrypted = encryptor.Decrypt(encrypted);
 
     Console.WriteLine(message);
+    Console.ForegroundColor = ConsoleColor.DarkRed;
     Console.WriteLine(encrypted);
-    Console.WriteLine(original);
-    Console.WriteLine();
+    Console.ForegroundColor = ConsoleColor.Gray;
+    Console.WriteLine(decrypted);
+    Console.WriteLine('\n');
 }
 
 Console.ReadKey();

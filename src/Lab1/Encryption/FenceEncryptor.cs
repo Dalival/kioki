@@ -36,8 +36,6 @@ public class FenceEncryptor : IEncryptor
             column = downwardDirection ? column + 1 : column - 1;
         }
 
-        // PrintMap(map);
-
         var encryptedMessage = MapToString(map);
 
         return encryptedMessage;
@@ -79,23 +77,6 @@ public class FenceEncryptor : IEncryptor
         var normalizedMessage = message.Replace(HookSymbol.ToString(), "");
 
         return normalizedMessage;
-    }
-
-    private static void PrintMap(List<List<char>> map)
-    {
-        var builder = new StringBuilder();
-        foreach (var row in map)
-        {
-            foreach (var symbol in row)
-            {
-                builder.Append(symbol);
-            }
-
-            builder.Append('\n');
-        }
-
-        builder.Replace(HookSymbol, ' ');
-        Console.WriteLine($"{builder}\n");
     }
 
 
