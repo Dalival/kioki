@@ -1,6 +1,6 @@
 ﻿using Encryption;
 
-const string message = "Егорка и Алинка из 972301/2 на страже безопасности!";
+const string message = "Егор и Мадина из 972301 на страже безопасности! :)";
 
 var encryptors = new List<IEncryptor>
 {
