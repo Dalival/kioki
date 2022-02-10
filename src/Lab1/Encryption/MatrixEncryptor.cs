@@ -1,5 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-using System.Text;
+﻿using System.Text;
 
 namespace Encryption;
 
@@ -27,7 +26,7 @@ public class MatrixEncryptor : IEncryptor
     {
         var normalizedMsg = Normalize(message);
         var msgParts = SplitMessage(normalizedMsg, _matrix.Length * _matrix.Length);
-        var matrixes = new List<char[][]>();
+        var matrices = new List<char[][]>();
 
         foreach (var msgPart in msgParts)
         {
@@ -37,18 +36,19 @@ public class MatrixEncryptor : IEncryptor
             {
                 for (var i = 0; i < _matrix.Length; i++)
                 {
-                    var X = _keys[i].X;
-                    var Y = _keys[i].Y;
-                    matrix[X][Y] = line[i];
+                    var x = _keys[i].X;
+                    var y = _keys[i].Y;
+                    matrix[x][y] = line[i];
                 }
 
                 matrix = RotateMatrix(matrix);
             }
-            matrixes.Add(matrix);
+
+            matrices.Add(matrix);
         }
 
         var builder = new StringBuilder();
-        foreach (var matrix in matrixes)
+        foreach (var matrix in matrices)
         {
             builder.Append(MatrixToString(matrix));
         }
@@ -58,7 +58,30 @@ public class MatrixEncryptor : IEncryptor
 
     public string Decrypt(string encryptedMsg)
     {
-        return "Not implemented";
+        var msgParts = SplitMessage(encryptedMsg, _matrix.Length * _matrix.Length);
+        var matrices = msgParts.Select(StringToMatrix).ToList();
+
+        var builder = new StringBuilder();
+        foreach (var m in matrices)
+        {
+            var matrix = m;
+            foreach (var _ in matrix)
+            {
+                for (var k = 0; k < _keys.Length; k++)
+                {
+                    var x = _keys[k].X;
+                    var y = _keys[k].Y;
+                    var symbol = matrix[x][y];
+                    builder.Append(symbol);
+                }
+
+                matrix = RotateMatrix(matrix);
+            }
+        }
+
+        var message = builder.ToString().TrimEnd(HookSymbol);
+
+        return message;
     }
 
     private void ThrowOnInvalidKeys(params (int X, int Y)[] indexes)
@@ -82,7 +105,7 @@ public class MatrixEncryptor : IEncryptor
         }
     }
 
-    private List<string> SplitMessage(string message, int substringLength)
+    private static List<string> SplitMessage(string message, int substringLength)
     {
         var lines = new List<string>();
         for (var i = 0; i < message.Length; i++)
@@ -107,14 +130,22 @@ public class MatrixEncryptor : IEncryptor
 
     private char[][] GenerateCharMatrix()
     {
-        var matrix = new List<List<char>>();
-        for (var i = 0; i < _matrix.Length; i++)
+        return _matrix
+            .Select(_ => Enumerable.Repeat(HookSymbol, _matrix.Length))
+            .Select(x => x.ToArray())
+            .ToArray();
+    }
+
+    private char[][] StringToMatrix(string message)
+    {
+        if (message.Length != _matrix.Length * _matrix.Length)
         {
-            var line = Enumerable.Repeat(HookSymbol, _matrix.Length).ToList();
-            matrix.Add(line);
+            throw new ArgumentException("Message length must be equal to matrix capacity. For example, 16-symbols message for matrix 4x4.");
         }
 
-        return matrix.Select(x => x.ToArray()).ToArray();
+        var lines = SplitMessage(message, _matrix.Length);
+
+        return lines.Select(l => l.ToCharArray()).ToArray();
     }
 
     private static char[][] RotateMatrix(char[][] matrix)
@@ -157,13 +188,3 @@ public class MatrixEncryptor : IEncryptor
         return builder.ToString();
     }
 }
-
-// [1,1] [1,2] [1,3] [1,4]
-// [2,1] [2,2] [2,3] [2,4]
-// [3,1] [3,2] [3,3] [3,4]
-// [4,1] [4,2] [4,3] [4,4]
-//
-// [4,1] [3,1] [2,1] [1,1]
-// [4,2] [3,2] [2,2] [1,2]
-// [4,3] [3,3] [2,3] [1,3]
-// [4,4] [3,4] [2,4] [1,4]
