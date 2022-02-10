@@ -58,7 +58,7 @@ public class KeywordEncryptor : IEncryptor
             }
         }
 
-        builder.Replace(HookSymbol, default);
+        builder.Replace(HookSymbol.ToString(), "");
 
         return builder.ToString();
     }
