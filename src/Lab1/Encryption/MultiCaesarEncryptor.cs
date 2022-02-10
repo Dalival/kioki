@@ -27,11 +27,11 @@ public class MultiCaesarEncryptor : IEncryptor
         _secondKey = GenerateSecondKey();
     }
 
-    public string Encrypt(string message) => CodeDecode(message, _key);
+    public string Encrypt(string message) => ShiftCharacters(message, _key);
 
-    public string Decrypt(string message) => CodeDecode(message, _secondKey);
+    public string Decrypt(string encryptedMsg) => ShiftCharacters(encryptedMsg, _secondKey);
 
-    private static string CodeDecode(string message, int key)
+    private static string ShiftCharacters(string message, int key)
     {
         var strBuilder = new StringBuilder();
         foreach (var symbol in message)
