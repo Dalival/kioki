@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Encryption;
+namespace Lab1;
 
 public class KeywordEncryptor : IEncryptor
 {

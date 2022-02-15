@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Encryption;
+namespace Lab1;
 
 public class MatrixEncryptor : IEncryptor
 {
@@ -151,9 +151,6 @@ public class MatrixEncryptor : IEncryptor
     private static char[][] RotateMatrix(char[][] matrix)
     {
         var size = matrix.Length;
-        //var layerCount = size / 2;
-
-        //for (var i = 0; i < layerCount; i++)
         for (var i = 0; i < size; i++)
         {
             var first = i;

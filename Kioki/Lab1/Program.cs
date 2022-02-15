@@ -1,6 +1,6 @@
-﻿using Encryption;
+﻿using Lab1;
 
-const string message = "Егор и Мадина из 972301 на страже безопасности! :)";
+const string message = "aBc";
 
 var encryptors = new List<IEncryptor>
 {
