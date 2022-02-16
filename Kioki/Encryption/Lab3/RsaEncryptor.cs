@@ -5,16 +5,18 @@ namespace Encryption.Lab3;
 
 public class RsaEncryptor : IEncryptor
 {
-    const string Alphabet = "abcdefghijklmnopqrstuvwxyz"
-                            + "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                            + "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
-                            + "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
-                            + "0123456789"
-                            + "±§!@#$%^&*()_-+=-:;\"'\\|,./<>? \n";
+    private const string Alphabet = "abcdefghijklmnopqrstuvwxyz"
+                                    + "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                                    + "абвгдеёжзийклмнопрстуфхцчшщъыьэюя"
+                                    + "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"
+                                    + "0123456789"
+                                    + "±§!@#$%^&*()_-+=-:;\"'\\|,./<>? \n";
 
-    private int _e;
-    private int _d;
-    private int _r;
+    private readonly Random _random = new();
+
+    private readonly int _e;
+    private readonly int _d;
+    private readonly int _r;
 
     public RsaEncryptor()
     {
@@ -58,17 +60,16 @@ public class RsaEncryptor : IEncryptor
         return decodedMessage;
     }
 
-    private static (int e, int d, int r) GenerateKeys()
+    private (int e, int d, int r) GenerateKeys()
     {
         const int p = 3;
         const int q = 53;
         const int r = p * q;
         const int fi = (p - 1) * (q - 1);
-        var rnd = new Random();
-        var e = rnd.Next(1, fi);
+        var e = _random.Next(1, fi);
         while(!IsPrimeNumber(e) || !AreCoprimeNumbers(e, fi) || e == 2)
         {
-            e = rnd.Next(1, fi);
+            e = _random.Next(1, fi);
         }
         var d = EuclidExtended(fi, e).Y;
         if (d < 0)

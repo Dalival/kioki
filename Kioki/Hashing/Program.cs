@@ -5,3 +5,5 @@ var hash = Pjw32Hasher.GetHash(message);
 Console.WriteLine("MESSAGE: " + message);
 Console.WriteLine("HASH: " + hash);
 Console.WriteLine("HEX HASH: 0x" + hash.ToString("X"));
+
+Console.ReadKey();
