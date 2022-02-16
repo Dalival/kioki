@@ -1,4 +1,4 @@
-﻿namespace Lab1;
+﻿namespace Encryption;
 
 public interface IEncryptor
 {

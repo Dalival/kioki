@@ -1,4 +1,4 @@
-﻿namespace Lab1;
+﻿namespace Encryption.Lab1;
 
 public class AsciiCaesarEncryptor : IEncryptor
 {

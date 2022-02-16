@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Lab1;
+namespace Encryption.Lab1;
 
 public class CaesarEncryptor : IEncryptor
 {

@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Numerics;
+﻿using System.Numerics;
 using System.Text;
 
-namespace Lab1;
+namespace Encryption.Lab3;
 
 public class RsaEncryptor : IEncryptor
 {

@@ -1,4 +1,6 @@
-﻿using Lab1;
+﻿using Encryption;
+using Encryption.Lab1;
+using Encryption.Lab3;
 
 const string message = "Egor and Alina are copilots. We are working together to achieve better results.";
 

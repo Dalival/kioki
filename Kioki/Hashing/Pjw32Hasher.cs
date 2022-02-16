@@ -1,4 +1,4 @@
-﻿namespace Lab4;
+﻿namespace Hashing;
 
 public static class Pjw32Hasher
 {

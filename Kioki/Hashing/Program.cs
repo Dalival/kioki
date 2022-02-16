@@ -1,4 +1,4 @@
-﻿using Lab4;
+﻿using Hashing;
 
 var message = File.OpenText("message.txt").ReadToEnd();
 var hash = Pjw32Hasher.GetHash(message);
