@@ -19,7 +19,7 @@ public class SdesEncryptor
         (_firstKey, _secondKey) = GenerateKeys(key);
     }
 
-    public string Encrypt(string message)
+    public List<byte> Encrypt(string message)
     {
         var allBits = StringToBits(message);
         var byteChunks = allBits.Chunk(8).ToList();
@@ -31,22 +31,17 @@ public class SdesEncryptor
             encryptedBits.AddRange(iterationTwo);
         }
 
-        var encryptedMsg = BitsToString(encryptedBits);
-
-        return encryptedMsg;
+        return encryptedBits;
     }
 
-    public string Decrypt(string encryptedMessage)
+    public string Decrypt(List<byte> encryptedBits)
     {
-        var allBits = StringToBits(encryptedMessage);
-        var byteChunks = allBits.Chunk(8).ToList();
+        var byteChunks = encryptedBits.Chunk(8).ToList();
         var decryptedBits = new List<byte>();
         foreach (var bits in byteChunks)
         {
             var iterationOne = EncryptingIteration(bits.ToList(), _secondKey, false);
             var iterationTwo = EncryptingIteration(iterationOne, _firstKey, true);
-            //var result = ApplyIP8(iterationTwo);
-            //decryptedBits.AddRange(result);
             decryptedBits.AddRange(iterationTwo);
         }
 
