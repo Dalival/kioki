@@ -22,55 +22,31 @@ foreach (var encryptor in encryptors)
     var encrypted = encryptor.Encrypt(message);
     var decrypted = encryptor.Decrypt(encrypted);
 
+    PrintLine(encryptor.GetType().Name, ConsoleColor.Blue);
     Console.WriteLine(message);
-    Console.ForegroundColor = ConsoleColor.DarkGray;
-    Console.WriteLine(encrypted);
-    Console.ForegroundColor = ConsoleColor.Gray;
+    PrintLine(encrypted, ConsoleColor.DarkGray);
     Console.WriteLine(decrypted);
     if (decrypted == message)
     {
-        Console.ForegroundColor = ConsoleColor.Green;
-        Console.WriteLine("SUCCESS");
+        PrintLine("SUCCESS", ConsoleColor.Green);
     }
     else if (decrypted == message.ToLower())
     {
-        Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.WriteLine("CASE LOSS");
+        PrintLine("CASE LOSS", ConsoleColor.Yellow);
     }
     else
     {
-        Console.ForegroundColor = ConsoleColor.Red;
-        Console.WriteLine("FAILED");
+        PrintLine("FAILED", ConsoleColor.Red);
     }
-    Console.ForegroundColor = ConsoleColor.Gray;
+
     Console.WriteLine('\n');
 }
 
-var sdesEncryptor = new SdesEncryptor(new List<byte> { 1, 0, 1, 0, 0, 0, 0, 0, 1, 0 });
-var encrypt = sdesEncryptor.Encrypt(message);
-var decrypt = sdesEncryptor.Decrypt(encrypt);
-
-Console.WriteLine(message);
-Console.ForegroundColor = ConsoleColor.DarkGray;
-Console.WriteLine(encrypt);
-Console.ForegroundColor = ConsoleColor.Gray;
-Console.WriteLine(decrypt);
-if (decrypt == message)
-{
-    Console.ForegroundColor = ConsoleColor.Green;
-    Console.WriteLine("SUCCESS");
-}
-else if (decrypt == message.ToLower())
-{
-    Console.ForegroundColor = ConsoleColor.Yellow;
-    Console.WriteLine("CASE LOSS");
-}
-else
-{
-    Console.ForegroundColor = ConsoleColor.Red;
-    Console.WriteLine("FAILED");
-}
-Console.ForegroundColor = ConsoleColor.Gray;
-Console.WriteLine('\n');
-
 Console.ReadKey();
+
+void PrintLine(object value, ConsoleColor color = ConsoleColor.Gray)
+{
+    Console.ForegroundColor = color;
+    Console.WriteLine(value);
+    Console.ForegroundColor = ConsoleColor.Gray;
+}
