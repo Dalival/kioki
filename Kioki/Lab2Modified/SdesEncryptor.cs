@@ -9,7 +9,7 @@ public class SdesEncryptor
     private readonly List<byte> _firstKey;
     private readonly List<byte> _secondKey;
 
-    public SdesEncryptor(List<byte> key)
+    public SdesEncryptor(IReadOnlyList<byte> key)
     {
         if (key?.Count != 10 || key.Any(x => x != 1 && x != 0))
         {
@@ -34,7 +34,7 @@ public class SdesEncryptor
         return encryptedBits;
     }
 
-    public string Decrypt(List<byte> encryptedBits)
+    public string Decrypt(IReadOnlyList<byte> encryptedBits)
     {
         var byteChunks = encryptedBits.Chunk(8).ToList();
         var decryptedBits = new List<byte>();
@@ -50,8 +50,7 @@ public class SdesEncryptor
         return encryptedMsg;
     }
 
-    //todo remove key parameter
-    private List<byte> EncryptingIteration(List<byte> bits, List<byte> key, bool secondTime)
+    private List<byte> EncryptingIteration(IReadOnlyList<byte> bits, IReadOnlyList<byte> key, bool secondTime)
     {
         var bitsIp8 = secondTime ? bits : ApplyIP8(bits);
 
@@ -64,13 +63,12 @@ public class SdesEncryptor
         var xorLeftHalf = xorResult.Take(4).ToList();
         var xorRightHalf = xorResult.TakeLast(4).ToList();
 
-        var xorLeftS0 = ApplyS0(xorLeftHalf); // 1 0
-        var xorRightS1 = ApplyS1(xorRightHalf); // 0 0
+        var xorLeftS0 = ApplyS0(xorLeftHalf);
+        var xorRightS1 = ApplyS1(xorRightHalf);
 
         var p4 = ApplyP4(xorLeftS0.Concat(xorRightS1).ToList());
         var xorWithInitialLeft = Xor(p4, leftHalf);
 
-        // second: 0 0 1 0 0 1 1 1
         var combined = xorWithInitialLeft.Concat(rightHalf).ToList();
 
         if (secondTime)
