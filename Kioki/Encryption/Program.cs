@@ -9,10 +9,11 @@ var encryptors = new List<IEncryptor>
 {
     new FenceEncryptor(5),
     new KeywordEncryptor("FedorenkoBartsevich"),
-    new MatrixEncryptor((0, 0), (1, 3), (3, 1), (2,2)),
+    new MatrixEncryptor((0, 0), (1, 3), (3, 1), (2, 2)),
     new CaesarEncryptor(12),
     new AsciiCaesarEncryptor(13),
     new MultiCaesarEncryptor(5),
+    new SdesEncryptor(new List<byte> { 1, 0, 1, 0, 0, 0, 0, 0, 1, 0 }),
     new RsaEncryptor()
 };
 

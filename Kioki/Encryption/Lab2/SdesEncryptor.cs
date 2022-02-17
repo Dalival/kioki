@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Text;
 
 namespace Encryption.Lab2;
 
@@ -323,9 +322,10 @@ public class SdesEncryptor : IEncryptor
 
     private static List<byte> StringToBits(string message)
     {
-        var bytes = Encoding.Default.GetBytes(message);
-        var bitArray = new BitArray(bytes);
-        var bitList = bitArray
+        var bytes = new byte[message.Length * sizeof(char)];
+        Buffer.BlockCopy(message.ToCharArray(), 0, bytes, 0, bytes.Length);
+        var bits = new BitArray(bytes);
+        var bitList = bits
             .Cast<bool>()
             .Select(bit => bit ? (byte) 1 : (byte) 0)
             .ToList();
@@ -333,20 +333,30 @@ public class SdesEncryptor : IEncryptor
         return bitList;
     }
 
-    private static string BitsToString(List<byte> bits)
+    private static string BitsToString(IReadOnlyList<byte> bits)
     {
-        var builder = new StringBuilder();
-        foreach (var chunk in bits.Chunk(8))
+        var bools = bits.Select(x => x == 1).ToArray();
+        var bytes = PackBoolsInByteArray(bools);
+        var chars = new char[bytes.Length / sizeof(char)];
+        Buffer.BlockCopy(bytes, 0, chars, 0, bytes.Length);
+        var message = new string(chars);
+
+        return message;
+    }
+
+    private static byte[] PackBoolsInByteArray(IReadOnlyList<bool> bools)
+    {
+        int len = bools.Count;
+        int bytes = len >> 3;
+        if ((len & 0x07) != 0) ++bytes;
+        byte[] arr2 = new byte[bytes];
+        for (int i = 0; i < bools.Count; i++)
         {
-            var bools = chunk.Select(x => x != 0).ToArray();
-            var bitArray = new BitArray(bools);
-            var bytes = new byte[1];
-            bitArray.CopyTo(bytes, 0);
-            var symbol = (char) bytes[0];
-            builder.Append(symbol);
+            if (bools[i])
+                arr2[i >> 3] |= (byte)(1 << (i & 0x07));
         }
 
-        return builder.ToString();
+        return arr2;
     }
 
     private static List<byte> Xor(IReadOnlyList<byte> first, IReadOnlyList<byte> second)
