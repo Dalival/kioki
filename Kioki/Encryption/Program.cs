@@ -1,5 +1,6 @@
 ﻿using Encryption;
 using Encryption.Lab1;
+using Encryption.Lab2;
 using Encryption.Lab3;
 
 const string message = "Egor and Alina are copilots. We are working together to achieve better results.";
@@ -43,5 +44,32 @@ foreach (var encryptor in encryptors)
     Console.ForegroundColor = ConsoleColor.Gray;
     Console.WriteLine('\n');
 }
+
+var sdesEncryptor = new SdesEncryptor(new List<byte> { 1, 0, 1, 0, 0, 0, 0, 0, 1, 0 });
+var encrypt = sdesEncryptor.Encrypt(message);
+var decrypt = sdesEncryptor.Decrypt(encrypt);
+
+Console.WriteLine(message);
+Console.ForegroundColor = ConsoleColor.DarkGray;
+Console.WriteLine(encrypt);
+Console.ForegroundColor = ConsoleColor.Gray;
+Console.WriteLine(decrypt);
+if (decrypt == message)
+{
+    Console.ForegroundColor = ConsoleColor.Green;
+    Console.WriteLine("SUCCESS");
+}
+else if (decrypt == message.ToLower())
+{
+    Console.ForegroundColor = ConsoleColor.Yellow;
+    Console.WriteLine("CASE LOSS");
+}
+else
+{
+    Console.ForegroundColor = ConsoleColor.Red;
+    Console.WriteLine("FAILED");
+}
+Console.ForegroundColor = ConsoleColor.Gray;
+Console.WriteLine('\n');
 
 Console.ReadKey();

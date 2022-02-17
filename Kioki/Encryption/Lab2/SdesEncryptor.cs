@@ -1,10 +1,9 @@
 ﻿using System.Collections;
-using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace Lab2Modified;
+namespace Encryption.Lab2;
 
-public class SdesEncryptor
+public class SdesEncryptor : IEncryptor
 {
     private readonly List<byte> _firstKey;
     private readonly List<byte> _secondKey;
@@ -19,7 +18,23 @@ public class SdesEncryptor
         (_firstKey, _secondKey) = GenerateKeys(key);
     }
 
-    public List<byte> Encrypt(string message)
+    public string Encrypt(string message)
+    {
+        var bits = EncryptBits(message);
+        var encryptedMsg = BitsToString(bits);
+
+        return encryptedMsg;
+    }
+
+    public string Decrypt(string encryptedMsg)
+    {
+        var bits = StringToBits(encryptedMsg);
+        var decryptedMsg = DecryptBits(bits);
+
+        return decryptedMsg;
+    }
+
+    public List<byte> EncryptBits(string message)
     {
         var allBits = StringToBits(message);
         var byteChunks = allBits.Chunk(8).ToList();
@@ -34,7 +49,7 @@ public class SdesEncryptor
         return encryptedBits;
     }
 
-    public string Decrypt(IReadOnlyList<byte> encryptedBits)
+    public string DecryptBits(IReadOnlyList<byte> encryptedBits)
     {
         var byteChunks = encryptedBits.Chunk(8).ToList();
         var decryptedBits = new List<byte>();
