@@ -66,12 +66,12 @@ public class SdesEncryptor : IEncryptor
 
     private List<byte> EncryptingIteration(IReadOnlyList<byte> bits, IReadOnlyList<byte> key, bool secondTime)
     {
-        var bitsIp8 = secondTime ? bits : ApplyIP8(bits);
+        var bitsIp8 = secondTime ? bits : ApplyIp8(bits);
 
         var leftHalf = bitsIp8.Take(4).ToList();
         var rightHalf = bitsIp8.TakeLast(4).ToList();
 
-        var rightEp = ApplyEP(rightHalf);
+        var rightEp = ApplyEp(rightHalf);
         var xorResult = Xor(rightEp, key);
 
         var xorLeftHalf = xorResult.Take(4).ToList();
@@ -150,7 +150,7 @@ public class SdesEncryptor : IEncryptor
         return newList;
     }
 
-    private static List<byte> ApplyIP8(IReadOnlyList<byte> values)
+    private static List<byte> ApplyIp8(IReadOnlyList<byte> values)
     {
         const int size = 8;
 
@@ -165,7 +165,7 @@ public class SdesEncryptor : IEncryptor
         return newList;
     }
 
-    private static List<byte> ApplyEP(IReadOnlyList<byte> values)
+    private static List<byte> ApplyEp(IReadOnlyList<byte> values)
     {
         const int size = 4;
 
@@ -346,11 +346,11 @@ public class SdesEncryptor : IEncryptor
 
     private static byte[] PackBoolsInByteArray(IReadOnlyList<bool> bools)
     {
-        int len = bools.Count;
-        int bytes = len >> 3;
+        var len = bools.Count;
+        var bytes = len >> 3;
         if ((len & 0x07) != 0) ++bytes;
-        byte[] arr2 = new byte[bytes];
-        for (int i = 0; i < bools.Count; i++)
+        var arr2 = new byte[bytes];
+        for (var i = 0; i < bools.Count; i++)
         {
             if (bools[i])
                 arr2[i >> 3] |= (byte)(1 << (i & 0x07));
