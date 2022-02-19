@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hashing", "Hashing\Hashing.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Signature", "Signature\Signature.csproj", "{C4413277-7793-4CCD-AA85-E6BAEA605A10}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stenography", "Stenography\Stenography.csproj", "{FFE47768-18E2-4B1E-83E5-B1DD71A2F9C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{C4413277-7793-4CCD-AA85-E6BAEA605A10}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4413277-7793-4CCD-AA85-E6BAEA605A10}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4413277-7793-4CCD-AA85-E6BAEA605A10}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFE47768-18E2-4B1E-83E5-B1DD71A2F9C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFE47768-18E2-4B1E-83E5-B1DD71A2F9C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFE47768-18E2-4B1E-83E5-B1DD71A2F9C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFE47768-18E2-4B1E-83E5-B1DD71A2F9C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
